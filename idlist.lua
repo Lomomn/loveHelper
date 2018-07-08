@@ -3,6 +3,8 @@ List = Class{__name = 'List'}
 function List.init(self)
     self.alive = {}
     self.aliveCount = 0
+
+    self.aliveSet = {}
 end
 
 
@@ -29,6 +31,7 @@ function List.insert(self, object)
     self:remove(object.id)
     if object.alive then
         if self.alive[object.id] == nil then
+            self.aliveSet[object] = true
             self.alive[object.id] = object
             self.aliveCount = self.aliveCount + 1
         end
@@ -39,6 +42,7 @@ end
 function List.remove(self, id)
     -- Remove the object from the list
     if self.alive[id] ~= nil then
+        self.aliveSet[self.alive[id]] = nil
         self.alive[id] = nil
         self.aliveCount = self.aliveCount - 1
     end
